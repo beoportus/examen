@@ -94,3 +94,31 @@ def stock_categoria(categoria, productos, inventario):
         print(f"\n No hay productos registrados en la categoría '{categoria}'")
     else:
         print(f"\n El stock total de la categoría '{categoria}' es: {total_stock}")
+
+
+def buscar_precio(precio_min, precio_max, productos, inventario):
+    resultados = []
+
+    for codigo in productos:
+        nombre = productos[codigo][0]
+        precio = productos[codigo][2]
+        stock = inventario[codigo][0]
+
+        if precio_min <= precio <= precio_max and stock > 0:
+            resultados.append([nombre, codigo])
+
+    if len(resultados) == 0:
+        print(f"\n No se encontraron productos entre ${precio_min} y ${precio_max}")
+        return
+
+    resultados()
+    for nombre, codigo in resultados:
+        print(f"{nombre} {codigo}")
+
+
+def actualizar_precio(codigo, nuevo_precio, productos):
+    for llave in productos:
+        if llave == codigo:
+            productos[llave][2] = nuevo_precio
+            return True
+        return False
