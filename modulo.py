@@ -17,7 +17,7 @@ def leer_opcion():
             print("Debe ser una opción válida")
 
 
-# ------ Funciones de validación ---
+# ------ Funciones de validación -----
 
 
 def validar_vendidos(vendidos):

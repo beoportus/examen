@@ -74,7 +74,7 @@ def actualizar_precio(productos):
         continuar = str(input("Desea actualizar otro producto? (S/N): "))
 
 
-def opcion_agregar_producto(productos, inventario):
+def agregar_producto(productos, inventario):
     codigo = str(input("Ingrese el código del producto: ")).strip()
     while not m.validar_codigo(codigo, productos):
         print("Error, el código no puede estar vacío y no puede repetirse")
@@ -103,7 +103,7 @@ def opcion_agregar_producto(productos, inventario):
     disponible_op = str(input("¿Está disponible? (S/N): ")).strip().upper()
     while not m.validar_disponible(disponible_op):
         print("Error, solo es válido S o N")
-        disponible_op = str(input("¿Está disponible? (S/N): ")).strip().upper()
+        disponible_op = str(input("Está disponible? (S/N): ")).strip().upper()
 
     disponible = True if disponible_op == "S" else False
 
@@ -141,6 +141,39 @@ def opcion_agregar_producto(productos, inventario):
         print("... registro almacenado!")
     else:
         print("Error, el código ya existe")
+
+
+def eliminar_producto(productos, inventario):
+    if len(productos) == 0:
+        print("No hay productos registrados para eliminar.")
+        return
+
+    codigo = str(input("Ingrese el código del producto a eliminar: ")).strip()
+
+    if m.eliminar_producto(codigo, productos, inventario):
+        print(f"El producto con código {codigo} fue eliminado exitosamente")
+    else:
+        print(f"No se encontró ningún producto con el código")
+
+    opcion = 0
+    while opcion != 7:
+        opcion_menu()
+        opcion = m.leer_opcion()
+
+        if opcion == 1:
+            stock_categoria(productos, inventario)
+        elif opcion == 2:
+            buscar_por_precio(productos, inventario)
+        elif opcion == 3:
+            actualizar_precio(productos)
+        elif opcion == 4:
+            agregar_producto(productos, inventario)
+        elif opcion == 5:
+            eliminar_producto(productos, inventario)
+        elif opcion == 6:
+            m.mostrar_productos(productos, inventario)
+        elif opcion == 7:
+            print("... saliendo de la app")
 
 
 def main():
