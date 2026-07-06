@@ -74,6 +74,75 @@ def actualizar_precio(productos):
         continuar = str(input("Desea actualizar otro producto? (S/N): "))
 
 
+def opcion_agregar_producto(productos, inventario):
+    codigo = str(input("Ingrese el código del producto: ")).strip()
+    while not m.validar_codigo(codigo, productos):
+        print("Error, el código no puede estar vacío y no puede repetirse")
+        codigo = str(input("Ingrese el código del producto: ")).strip()
+
+    nombre = str(input("Ingrese el nombre: ")).strip()
+    while not m.validar_nombre(nombre):
+        print("Error, no puede ser un texto vacío")
+        nombre = str(input("Ingrese el nombre: ")).strip()
+
+    categoria = str(input("Ingrese la categoría: ")).strip()
+    while not m.validar_categoria(categoria):
+        print("Error, no puede ser un texto vacío")
+        categoria = str(input("Ingrese la categoría: ")).strip()
+
+    while True:
+        try:
+            precio = int(input("Ingrese el precio: "))
+            while not m.validar_precio(precio):
+                print("Error, debe ser un número mayor a 0")
+                precio = int(input("Ingrese el precio: "))
+            break
+        except:
+            print("Error, debe ser un N°")
+
+    disponible_op = str(input("¿Está disponible? (S/N): ")).strip().upper()
+    while not m.validar_disponible(disponible_op):
+        print("Error, solo es válido S o N")
+        disponible_op = str(input("¿Está disponible? (S/N): ")).strip().upper()
+
+    disponible = True if disponible_op == "S" else False
+
+    while True:
+        try:
+            stock = int(input("Ingrese el stock: "))
+            while not m.validar_stock(stock):
+                print("Error, debe ser mayor o igual a 0")
+                stock = int(input("Ingrese el stock: "))
+            break
+        except:
+            print("Error, debe ser un N°")
+
+    while True:
+        try:
+            vendidos = int(input("Ingrese la cantidad vendida: "))
+            while not m.validar_vendidos(vendidos):
+                print("Error, debe ser mayor o igual a 0")
+                vendidos = int(input("Ingrese la cantidad vendida: "))
+            break
+        except:
+            print("Error, debe ser un N°")
+
+    if m.agregar_producto(
+        codigo,
+        nombre,
+        categoria,
+        precio,
+        disponible,
+        stock,
+        vendidos,
+        productos,
+        inventario,
+    ):
+        print("... registro almacenado!")
+    else:
+        print("Error, el código ya existe")
+
+
 def main():
     productos = {
         "P101": ["Cuaderno", "Papelería", 2490, True],

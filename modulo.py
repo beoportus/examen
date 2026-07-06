@@ -122,3 +122,66 @@ def actualizar_precio(codigo, nuevo_precio, productos):
             productos[llave][2] = nuevo_precio
             return True
         return False
+
+
+def agregar_producto(
+    codigo,
+    nombre,
+    categoria,
+    precio,
+    disponible,
+    stock,
+    vendidos,
+    productos,
+    inventario,
+):
+    if not validar_codigo(codigo, productos):
+        return False
+
+    producto = [nombre, categoria, precio, disponible]
+    productos[codigo] = producto
+
+    stock_producto = [stock, vendidos]
+    inventario[codigo] = stock_producto
+
+    return True
+
+
+def eliminar_producto(codigo, productos, inventario):
+    llave_real = None
+    for llave in productos:
+        if llave == codigo:
+            llave_real = llave
+            break
+
+    if llave_real is None:
+        return False
+
+    del productos[llave_real]
+    del inventario[llave_real]
+    return True
+
+
+def mostrar_productos(productos, inventario):
+    if len(productos) == 0:
+        print("\n No hay productos registrados")
+        return
+
+    for codigo in productos:
+        nombre = productos[codigo][0]
+        categoria = productos[codigo][1]
+        precio = productos[codigo][2]
+        disponible = productos[codigo][3]
+        stock = inventario[codigo][0]
+        vendidos = inventario[codigo][1]
+
+        print(f"""
+                CODIGO: {codigo}
+                --------------------------
+                Nombre: {nombre}
+                Categoría: {categoria}
+                Precio: ${precio}
+                Disponible: {disponible}
+                Stock: {stock}
+                Vendidos: {vendidos}
+                --------------------------""")
